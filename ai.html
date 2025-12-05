@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/jpg" href="./src/assets/logo.png"/>
+    <title >VERTOFI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<style>
+  /* Smooth subtle bounce animations */
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-10px); opacity: 0.7; }
+  }
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); opacity: 0.2; }
+    50% { transform: translateY(-6px); opacity: 0.1; }
+  }
+  @keyframes bounce-delay {
+    0%, 100% { transform: translateY(0); opacity: 0.3; }
+    50% { transform: translateY(-8px); opacity: 0.15; }
+  }
+
+  .animate-bounce { animation: bounce 1.8s infinite ease-in-out; }
+  .animate-bounce-slow { animation: bounce-slow 2.5s infinite ease-in-out; }
+  .animate-bounce-delay { animation: bounce-delay 2.1s infinite ease-in-out; }
+
+
+        /* small helper for neon hover underlines (desktop nav) */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      bottom: -6px;
+      width: 60%;
+      height: 2px;
+      background: rgba(0,194,255,0.9);
+      transition: transform .25s ease;
+      border-radius: 99px;
+    }
+    .nav-link:hover::after { transform: translateX(-50%) scaleX(1); }
+    /* compact header when scrolled */
+    #navbar.scrolled { background: rgba(7,10,25,0.6); backdrop-filter: blur(8px); box-shadow: 0 6px 30px rgba(2,6,23,0.6); }
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+</style>
+
+</head>
+<body>
+
+
+
+<header id="navbar" class="fixed w-full top-0 z-50 bg-transparent transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+    <!-- Logo -->
+    <div class="flex items-center space-x-3">
+      <!-- Use a white/mono logo for best contrast -->
+      <img src="./src/assets/logo with name.png" alt="Logo" class="h-12 w-auto">
+    </div>
+
+    <!-- Desktop Menu -->
+    <nav id="desktopMenu" class="hidden md:flex items-center space-x-8 font-medium">
+      <a href="./index.html" class="nav-link text-white hover:text-cyan-300 transition">Home</a>
+      <a href="./about.html" class="nav-link text-white hover:text-cyan-300 transition">About</a>
+      <a href="./services.html" class="nav-link text-white hover:text-cyan-300 transition">Features</a>
+      <a href="./blog.html" class="nav-link text-white hover:text-cyan-300 transition">Blog</a>
+      <a href="./ai.html" class="nav-link text-white hover:text-cyan-300 transition">AI</a>
+      <a href="./contact.html" class="nav-link text-white hover:text-cyan-300 transition">Contact</a>
+    </nav>
+
+    <!-- Join Waitlist Button -->
+    <a href="./contact.html" class="hidden md:block">
+      <button id="waitBtn"
+        class="px-6 py-2 rounded-full text-black font-semibold
+               bg-gradient-to-r from-cyan-300 to-blue-500
+               shadow-lg drop-shadow-[0_8px_30px_rgba(0,194,255,0.18)]
+               ring-1 ring-cyan-400/20 hover:scale-[1.02] transition-transform">
+        Join Waitlist
+      </button>
+    </a>
+
+    <!-- Mobile Toggle -->
+    <button id="menuBtn" class="md:hidden text-2xl text-white p-2 rounded-md hover:bg-white/5 transition">
+      <!-- simple hamburger icon using svg for better styling -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="stroke-current">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- Mobile Menu (glass) -->
+  <div id="mobileMenu"
+       class="hidden md:hidden flex flex-col bg-black/55 text-white px-6 py-6 space-y-4 backdrop-blur-md shadow-xl rounded-b-xl">
+    <a class="block text-lg hover:text-cyan-300 transition" href="./index.html">Home</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./about.html">About</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./services.html">Features</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./blog.html">Blog</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./ai.html">AI</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./contact.html">Contact</a>
+  </div>
+
+
+</header>
+
+
+<section class="min-h-screen flex items-center justify-center bg-[#050712] px-6 relative overflow-hidden">
+
+  <!-- Neon Glow Background Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-r from-[#00C2FF]/20 via-[#8B5CF6]/20 to-[#00C2FF]/20 blur-3xl pointer-events-none"></div>
+
+  <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] text-center max-w-xl w-full">
+
+    <!-- Animated Coins -->
+    <div class="relative w-20 h-20 mx-auto mb-6">
+      <div class="absolute inset-0 bg-[#00C2FF]/20 rounded-full animate-bounce-slow"></div>
+      <div class="absolute inset-2 bg-[#00C2FF]/40 rounded-full animate-bounce-delay"></div>
+      <div class="absolute inset-4 bg-[#00C2FF] rounded-full animate-bounce"></div>
+    </div>
+
+    <h2 class="text-3xl font-semibold text-white mb-4">
+      Our AI Is Still Doing the Math...
+    </h2>
+
+    <p class="text-white/70 text-lg leading-relaxed">
+      We're building something smart enough to handle your finances.
+      <br />
+      Hopefully smarter than that one friend who invests based on Instagram reels.
+    </p>
+
+    <p class="text-white/50 mt-6 italic">
+      Until then, sit back and imagine impressive AI things happening here.
+    </p>
+
+    <p class="text-yellow-400 font-semibold mt-4">
+      Coming Soon — because good things take time (and accountants).
+    </p>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#050712] py-6 text-center text-white/50 text-sm border-t border-white/10">
+  <p>Copyright © 2025 Vertofi</p>
+</footer>
+
+
+<!-- small script: mobile toggle + header scroll effect -->
+<script>
+  (function () {
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navbar = document.getElementById('navbar');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      // optional simple slide effect
+      mobileMenu.classList.toggle('translate-y-0');
+    });
+
+    // add scrolled class when user scrolls down
+    const onScroll = () => {
+      if (window.scrollY > 20) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    };
+    document.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+
+    
+</body>
+</html>

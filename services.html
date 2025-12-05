@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/jpg" href="./src/assets/logo.png"/>
+    <title >VERTOFI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    :root { --teal: #00B4A8; --mint: #EAF6F4; --navy: #003950; }
+    html { scroll-behavior: smooth; }
+    .focus-outline { outline: 3px solid rgba(0,180,168,0.18); outline-offset: 3px; }
+
+    .fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+      /* small helper for neon hover underlines (desktop nav) */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      bottom: -6px;
+      width: 60%;
+      height: 2px;
+      background: rgba(0,194,255,0.9);
+      transition: transform .25s ease;
+      border-radius: 99px;
+    }
+    .nav-link:hover::after { transform: translateX(-50%) scaleX(1); }
+    /* compact header when scrolled */
+    #navbar.scrolled { background: rgba(7,10,25,0.6); backdrop-filter: blur(8px); box-shadow: 0 6px 30px rgba(2,6,23,0.6); }
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+  </style>
+
+</head>
+<body>
+
+
+<header id="navbar" class="fixed w-full top-0 z-50 bg-transparent transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+    <!-- Logo -->
+    <div class="flex items-center space-x-3">
+      <!-- Use a white/mono logo for best contrast -->
+      <img src="./src/assets/logo with name.png" alt="Logo" class="h-12 w-auto">
+    </div>
+
+    <!-- Desktop Menu -->
+    <nav id="desktopMenu" class="hidden md:flex items-center space-x-8 font-medium">
+      <a href="./index.html" class="nav-link text-white hover:text-cyan-300 transition">Home</a>
+      <a href="./about.html" class="nav-link text-white hover:text-cyan-300 transition">About</a>
+      <a href="./services.html" class="nav-link text-white hover:text-cyan-300 transition">Features</a>
+      <a href="./blog.html" class="nav-link text-white hover:text-cyan-300 transition">Blog</a>
+      <a href="./ai.html" class="nav-link text-white hover:text-cyan-300 transition">AI</a>
+      <a href="./contact.html" class="nav-link text-white hover:text-cyan-300 transition">Contact</a>
+    </nav>
+
+    <!-- Join Waitlist Button -->
+    <a href="./contact.html" class="hidden md:block">
+      <button id="waitBtn"
+        class="px-6 py-2 rounded-full text-black font-semibold
+               bg-gradient-to-r from-cyan-300 to-blue-500
+               shadow-lg drop-shadow-[0_8px_30px_rgba(0,194,255,0.18)]
+               ring-1 ring-cyan-400/20 hover:scale-[1.02] transition-transform">
+        Join Waitlist
+      </button>
+    </a>
+
+    <!-- Mobile Toggle -->
+    <button id="menuBtn" class="md:hidden text-2xl text-white p-2 rounded-md hover:bg-white/5 transition">
+      <!-- simple hamburger icon using svg for better styling -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="stroke-current">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- Mobile Menu (glass) -->
+  <div id="mobileMenu"
+       class="hidden md:hidden flex flex-col bg-black/55 text-white px-6 py-6 space-y-4 backdrop-blur-md shadow-xl rounded-b-xl">
+    <a class="block text-lg hover:text-cyan-300 transition" href="./index.html">Home</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./about.html">About</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./services.html">Features</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./blog.html">Blog</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./ai.html">AI</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./contact.html">Contact</a>
+  </div>
+
+</header>
+ 
+    
+<!-- SERVICES HERO -->
+<section class="bg-[#050712] py-24 md:py-32 relative overflow-hidden flex items-center">
+
+  <!-- Background Canvas -->
+  <canvas id="hero-canvas" class="absolute inset-0 w-full h-full"></canvas>
+
+  <div class="max-w-6xl mx-auto px-4 relative z-20 text-center">
+
+    <!-- Small Label -->
+    <p class="text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] text-cyan-400/80 mb-4 drop-shadow-[0_0_12px_rgba(0,194,255,0.4)]">
+      Our Financial Solutions
+    </p>
+
+    <!-- Heading -->
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-6 drop-shadow-[0_0_25px_rgba(0,194,255,0.25)]">
+      Comprehensive Financial Services<br class="hidden sm:block" />
+      You Can Trust
+    </h1>
+
+    <!-- Paragraph -->
+    <p class="text-sm sm:text-base md:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed drop-shadow-[0_0_15px_rgba(0,194,255,0.25)]">
+      At Vertofi, we offer complete financial, tax, and compliance solutions for
+      individuals, startups, and businesses. We ensure  
+      <span class="text-cyan-400 font-semibold">
+        accurate accounting, smart tax planning, and full regulatory compliance
+      </span> —
+      so you can focus on scaling your business with confidence.
+    </p>
+
+  </div>
+
+</section>
+
+
+
+
+<!-- SERVICES GRID (Neo Dark + Icon Version) -->
+<section class="py-20 bg-[#050712]">
+  <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    <!-- 01 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">01.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">🤖 Automated GST Fetching & Reconciliation</h3>
+      <p class="text-white/70 text-sm">Auto-pull GST data & reconcile mismatches instantly.</p>
+    </div>
+
+    <!-- 02 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">02.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">📄 OCR-Based Document Capture</h3>
+      <p class="text-white/70 text-sm">Extract data from invoices & receipts with AI-powered OCR.</p>
+    </div>
+
+    <!-- 03 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">03.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">🧠 AI-Based Categorization of Expenses</h3>
+      <p class="text-white/70 text-sm">Automatically classify expenses with intelligent algorithms.</p>
+    </div>
+
+    <!-- 04 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">04.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">🏦 Automated Bank Syncing & Reconciliation</h3>
+      <p class="text-white/70 text-sm">Sync bank feeds & reconcile entries in real-time.</p>
+    </div>
+
+    <!-- 05 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">05.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">📊 Predictive Analytics for Tax & Cashflow</h3>
+      <p class="text-white/70 text-sm">Forecast taxes, cashflow, and financial risks using AI.</p>
+    </div>
+
+    <!-- 06 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">06.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">🛡️ Fraud Detection via Anomaly Analysis</h3>
+      <p class="text-white/70 text-sm">Detect unusual transactions instantly with machine learning.</p>
+    </div>
+
+    <!-- 07 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">07.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">🚨 24×7 Emergency Financial Desk</h3>
+      <p class="text-white/70 text-sm">Round-the-clock support for urgent financial issues.</p>
+    </div>
+
+    <!-- 08 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">08.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">📈 Data Visualization Dashboards</h3>
+      <p class="text-white/70 text-sm">Interactive dashboards for real-time business insights.</p>
+    </div>
+
+    <!-- 09 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">09.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">📲 WhatsApp-Based Workflow Automation</h3>
+      <p class="text-white/70 text-sm">Approve tasks, submit documents & get updates via WhatsApp.</p>
+    </div>
+
+    <!-- 10 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">10.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">🕵️ Blackbox Logging for Transparency</h3>
+      <p class="text-white/70 text-sm">Every action is logged for full transparency & audit tracking.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- FINAL CTA -->
+<section class="relative w-full py-24 text-center bg-[#050712] overflow-hidden">
+
+  <!-- Neon Glow Background Overlay -->
+  <!-- <div class="absolute inset-0 bg-gradient-to-r from-[#00C2FF]/20 via-[#8B5CF6]/20 to-[#00C2FF]/20 blur-3xl pointer-events-none"></div> -->
+
+  <div class="relative z-10 max-w-4xl mx-auto px-4">
+    <h2 class="text-3xl md:text-4xl font-semibold text-white mb-4">
+      Ready to Simplify Your Financial <br> Journey?
+    </h2>
+
+    <p class="text-white/70 mb-6">
+      Contact us today for personalized financial solutions that empower your growth.
+    </p>
+
+    <a href="./contact.html">
+      <button class="px-6 py-3 border border-[#00C2FF] text-[#00C2FF] rounded-xl 
+                     hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] 
+                     hover:-translate-y-2 transition">
+        Get Started
+      </button>
+    </a>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#050712] py-6 text-center text-white/70 text-sm border-t border-white/10">
+  <p>Copyright © 2025 Vertofi</p>
+</footer>
+
+
+<!-- small script: mobile toggle + header scroll effect -->
+<script>
+  (function () {
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navbar = document.getElementById('navbar');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      // optional simple slide effect
+      mobileMenu.classList.toggle('translate-y-0');
+    });
+
+    // add scrolled class when user scrolls down
+    const onScroll = () => {
+      if (window.scrollY > 20) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    };
+    document.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script>
+const canvas = document.getElementById("hero-canvas");
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+camera.position.z = 5;
+
+const renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+// ----- 1️⃣ Soft Smoke Layer -----
+const smokeTexture = new THREE.TextureLoader().load('https://i.ibb.co/gyQFjTX/smoke.png'); // soft smoke png
+const smokeMaterial = new THREE.SpriteMaterial({ map: smokeTexture, color: 0x00C2FF, transparent: true, opacity: 0.05 });
+const smokeParticles = [];
+for(let i=0;i<50;i++){
+  const particle = new THREE.Sprite(smokeMaterial.clone());
+  particle.position.set((Math.random()-0.5)*10, (Math.random()-0.5)*5, (Math.random()-0.5)*5);
+  particle.scale.set(5,5,1);
+  scene.add(particle);
+  smokeParticles.push(particle);
+}
+
+// ----- 2️⃣ Particle Network -----
+const particleCount = 100;
+const geometry = new THREE.BufferGeometry();
+const positions = new Float32Array(particleCount * 3);
+for(let i=0;i<particleCount*3;i++){
+  positions[i] = (Math.random()-0.5) * 10;
+}
+geometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
+
+const material = new THREE.PointsMaterial({ color: 0x00C2FF, size: 0.05, transparent:true, opacity:0.6 });
+const points = new THREE.Points(geometry, material);
+scene.add(points);
+
+// Lines connecting particles
+const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00C2FF, transparent:true, opacity:0.05 });
+const lineGeometry = new THREE.BufferGeometry();
+lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
+const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+scene.add(lines);
+
+// Mouse interaction
+const mouse = {x:0, y:0};
+window.addEventListener('mousemove', e=>{
+  mouse.x = (e.clientX/window.innerWidth)*2-1;
+  mouse.y = -(e.clientY/window.innerHeight)*2+1;
+});
+
+// Animation
+function animate(){
+  requestAnimationFrame(animate);
+
+  const time = Date.now() * 0.0005;
+
+  // Smoke movement
+  smokeParticles.forEach(p=>{
+    p.position.x += 0.001;
+    p.position.y += 0.0005*Math.sin(time*0.5);
+    if(p.position.x>5) p.position.x=-5;
+  });
+
+  // Particle network subtle movement
+  const positions = geometry.attributes.position.array;
+  for(let i=0;i<positions.length;i+=3){
+    positions[i] += 0.001*Math.sin(time+i);
+    positions[i+1] += 0.001*Math.cos(time+i);
+  }
+  geometry.attributes.position.needsUpdate = true;
+  lineGeometry.attributes.position.needsUpdate = true;
+
+  // Slight camera rotation for depth
+  camera.position.x = mouse.x*2;
+  camera.position.y = mouse.y*1;
+  camera.lookAt(scene.position);
+
+  renderer.render(scene, camera);
+}
+animate();
+
+// Resize
+window.addEventListener('resize', () => {
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+</script>
+
+</body>
+</html>
