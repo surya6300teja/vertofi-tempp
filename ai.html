@@ -59,6 +59,17 @@
   background-color: transparent;
 }
 
+  select option {
+    background-color: rgba(255,255,255,0.05); /* dark background for options */
+    color: white;
+  }
+  select:focus {
+    background-color: rgba(0,0,0,0.2); /* keeps dropdown dark on open */
+    color: white;
+  }
+  /* Remove default arrow on some browsers */
+  select::-ms-expand { display: none; }
+
 </style>
 
 </head>
@@ -71,7 +82,6 @@
 
     <!-- Logo -->
     <div class="flex items-center space-x-3">
-      <!-- Use a white/mono logo for best contrast -->
       <img src="./src/assets/logo with name.png" alt="Logo" class="h-12 w-auto">
     </div>
 
@@ -85,24 +95,26 @@
       <a href="./contact.html" class="nav-link text-white hover:text-cyan-300 transition">Contact</a>
     </nav>
 
-    <!-- Join Waitlist Button -->
-    <a href="./contact.html" class="hidden md:block">
-      <button id="waitBtn"
-        class="px-6 py-2 rounded-full text-black font-semibold
-               bg-gradient-to-r from-cyan-300 to-blue-500
-               shadow-lg drop-shadow-[0_8px_30px_rgba(0,194,255,0.18)]
-               ring-1 ring-cyan-400/20 hover:scale-[1.02] transition-transform">
-        Join Waitlist
-      </button>
-    </a>
+    <!-- Mobile & Join Waitlist -->
+    <div class="flex items-center space-x-3">
+      <!-- Join Waitlist Button (visible on all screens) -->
+      <a href="javascript:void(0);" id="waitBtn">
+        <button
+          class="px-4 py-2 rounded-full text-black font-semibold
+                 bg-gradient-to-r from-cyan-300 to-blue-500
+                 shadow-lg drop-shadow-[0_8px_30px_rgba(0,194,255,0.18)]
+                 ring-1 ring-cyan-400/20 hover:scale-[1.02] transition-transform text-sm md:text-base">
+          Join Waitlist
+        </button>
+      </a>
 
-    <!-- Mobile Toggle -->
-    <button id="menuBtn" class="md:hidden text-2xl text-white p-2 rounded-md hover:bg-white/5 transition">
-      <!-- simple hamburger icon using svg for better styling -->
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="stroke-current">
-        <path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
+      <!-- Mobile Toggle -->
+      <button id="menuBtn" class="md:hidden text-2xl text-white p-2 rounded-md hover:bg-white/5 transition">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="stroke-current">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
 
   </div>
 
@@ -116,9 +128,75 @@
     <a class="block text-lg hover:text-cyan-300 transition" href="./ai.html">AI</a>
     <a class="block text-lg hover:text-cyan-300 transition" href="./contact.html">Contact</a>
   </div>
-
-
 </header>
+
+<!-- Join Waitlist Modal -->
+<div id="waitlistModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
+  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl w-full max-w-3xl p-8 relative">
+
+    <!-- Close Button -->
+    <button id="modalClose" class="absolute top-4 right-4 text-white text-2xl hover:text-cyan-400">&times;</button>
+
+    <!-- Form -->
+    <form id="waitlistForm" class="space-y-4 text-white">
+      <!-- Web3Forms Config -->
+      <input type="hidden" name="access_key" value="ed38b464-269e-4461-911d-80ff24535f21">
+      <input type="hidden" name="subject" value="Join Waitlist Form Submission">
+
+      <h2 class="text-2xl font-semibold mb-4 text-white">Join Waitlist</h2>
+
+      <input type="text" name="name" placeholder="Your Name" required
+             class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none">
+
+      <input type="tel" name="phone" placeholder="Phone Number" required
+             class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none">
+
+      <input type="email" name="email" placeholder="Email Address" required
+             class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none">
+
+      <!-- Feature Dropdown -->
+      <div class="relative w-full">
+        <select name="feature" required
+                class="w-full p-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none appearance-none cursor-pointer"
+                id="featureSelect">
+          <option value="" disabled selected>Select Feature</option>
+          <option value="Vertofi Financial Health Score™">Vertofi Financial Health Score™</option>
+          <option value="Predictive Tax Warning System™">Predictive Tax Warning System™</option>
+          <option value="Vertofi Business Lifeguard™ (24×7)">Vertofi Business Lifeguard™ (24×7)</option>
+          <option value="ProfitLeak Finder™">ProfitLeak Finder™</option>
+          <option value="Virtual Business Director™ (VBD)">Virtual Business Director™ (VBD)</option>
+          <option value="WhatsApp Micro Accounting™">WhatsApp Micro Accounting™</option>
+          <option value="Financial Wellness Program™">Financial Wellness Program™</option>
+          <option value="Invisible Accounting™">Invisible Accounting™</option>
+          <option value="VendorTrust Score™">VendorTrust Score™</option>
+          <option value="Accounting Warranty+™">Accounting Warranty+™</option>
+          <option value="MoneyMap Live™">MoneyMap Live™</option>
+          <option value="On-Demand Accountant (10-Min Help)™">On-Demand Accountant (10-Min Help)™</option>
+          <option value="Financial Black Box Recording™">Financial Black Box Recording™</option>
+          <option value="Vertofi Industry Benchmarks™">Vertofi Industry Benchmarks™</option>
+          <option value="Zero-Data-Entry Accounting™">Zero-Data-Entry Accounting™</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
+      <textarea name="message" rows="4" placeholder="Your Message" 
+                class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none"></textarea>
+
+      <button type="submit"
+              class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-300 to-blue-500 text-black font-semibold
+                     shadow-lg hover:scale-[1.02] transition-transform">
+        Send Message
+      </button>
+
+      <p id="formMessage" class="text-green-400 mt-2 hidden">Message sent successfully!</p>
+    </form>
+  </div>
+</div>
+
 
 
 <section class="min-h-screen flex items-center justify-center bg-[#050712] px-6 relative overflow-hidden">

@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 
   <style>
     :root { --teal: #00B4A8; --mint: #EAF6F4; --navy: #003950; }
@@ -54,6 +56,17 @@
   background-color: transparent;
 }
 
+  select option {
+    background-color: rgba(255,255,255,0.05); /* dark background for options */
+    color: white;
+  }
+  select:focus {
+    background-color: rgba(0,0,0,0.2); /* keeps dropdown dark on open */
+    color: white;
+  }
+  /* Remove default arrow on some browsers */
+  select::-ms-expand { display: none; }
+
   </style>
 
 </head>
@@ -65,7 +78,6 @@
 
     <!-- Logo -->
     <div class="flex items-center space-x-3">
-      <!-- Use a white/mono logo for best contrast -->
       <img src="./src/assets/logo with name.png" alt="Logo" class="h-12 w-auto">
     </div>
 
@@ -79,24 +91,26 @@
       <a href="./contact.html" class="nav-link text-white hover:text-cyan-300 transition">Contact</a>
     </nav>
 
-    <!-- Join Waitlist Button -->
-    <a href="./contact.html" class="hidden md:block">
-      <button id="waitBtn"
-        class="px-6 py-2 rounded-full text-black font-semibold
-               bg-gradient-to-r from-cyan-300 to-blue-500
-               shadow-lg drop-shadow-[0_8px_30px_rgba(0,194,255,0.18)]
-               ring-1 ring-cyan-400/20 hover:scale-[1.02] transition-transform">
-        Join Waitlist
-      </button>
-    </a>
+    <!-- Mobile & Join Waitlist -->
+    <div class="flex items-center space-x-3">
+      <!-- Join Waitlist Button (visible on all screens) -->
+      <a href="javascript:void(0);" id="waitBtn">
+        <button
+          class="px-4 py-2 rounded-full text-black font-semibold
+                 bg-gradient-to-r from-cyan-300 to-blue-500
+                 shadow-lg drop-shadow-[0_8px_30px_rgba(0,194,255,0.18)]
+                 ring-1 ring-cyan-400/20 hover:scale-[1.02] transition-transform text-sm md:text-base">
+          Join Waitlist
+        </button>
+      </a>
 
-    <!-- Mobile Toggle -->
-    <button id="menuBtn" class="md:hidden text-2xl text-white p-2 rounded-md hover:bg-white/5 transition">
-      <!-- simple hamburger icon using svg for better styling -->
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="stroke-current">
-        <path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
+      <!-- Mobile Toggle -->
+      <button id="menuBtn" class="md:hidden text-2xl text-white p-2 rounded-md hover:bg-white/5 transition">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="stroke-current">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
 
   </div>
 
@@ -110,8 +124,75 @@
     <a class="block text-lg hover:text-cyan-300 transition" href="./ai.html">AI</a>
     <a class="block text-lg hover:text-cyan-300 transition" href="./contact.html">Contact</a>
   </div>
-
 </header>
+
+<!-- Join Waitlist Modal -->
+<div id="waitlistModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
+  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl w-full max-w-3xl p-8 relative">
+
+    <!-- Close Button -->
+    <button id="modalClose" class="absolute top-4 right-4 text-white text-2xl hover:text-cyan-400">&times;</button>
+
+    <!-- Form -->
+    <form id="waitlistForm" class="space-y-4 text-white">
+      <!-- Web3Forms Config -->
+      <input type="hidden" name="access_key" value="ed38b464-269e-4461-911d-80ff24535f21">
+      <input type="hidden" name="subject" value="Join Waitlist Form Submission">
+
+      <h2 class="text-2xl font-semibold mb-4 text-white">Join Waitlist</h2>
+
+      <input type="text" name="name" placeholder="Your Name" required
+             class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none">
+
+      <input type="tel" name="phone" placeholder="Phone Number" required
+             class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none">
+
+      <input type="email" name="email" placeholder="Email Address" required
+             class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none">
+
+      <!-- Feature Dropdown -->
+      <div class="relative w-full">
+        <select name="feature" required
+                class="w-full p-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none appearance-none cursor-pointer"
+                id="featureSelect">
+          <option value="" disabled selected>Select Feature</option>
+          <option value="Vertofi Financial Health Score™">Vertofi Financial Health Score™</option>
+          <option value="Predictive Tax Warning System™">Predictive Tax Warning System™</option>
+          <option value="Vertofi Business Lifeguard™ (24×7)">Vertofi Business Lifeguard™ (24×7)</option>
+          <option value="ProfitLeak Finder™">ProfitLeak Finder™</option>
+          <option value="Virtual Business Director™ (VBD)">Virtual Business Director™ (VBD)</option>
+          <option value="WhatsApp Micro Accounting™">WhatsApp Micro Accounting™</option>
+          <option value="Financial Wellness Program™">Financial Wellness Program™</option>
+          <option value="Invisible Accounting™">Invisible Accounting™</option>
+          <option value="VendorTrust Score™">VendorTrust Score™</option>
+          <option value="Accounting Warranty+™">Accounting Warranty+™</option>
+          <option value="MoneyMap Live™">MoneyMap Live™</option>
+          <option value="On-Demand Accountant (10-Min Help)™">On-Demand Accountant (10-Min Help)™</option>
+          <option value="Financial Black Box Recording™">Financial Black Box Recording™</option>
+          <option value="Vertofi Industry Benchmarks™">Vertofi Industry Benchmarks™</option>
+          <option value="Zero-Data-Entry Accounting™">Zero-Data-Entry Accounting™</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
+      <textarea name="message" rows="4" placeholder="Your Message" 
+                class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none"></textarea>
+
+      <button type="submit"
+              class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-300 to-blue-500 text-black font-semibold
+                     shadow-lg hover:scale-[1.02] transition-transform">
+        Send Message
+      </button>
+
+      <p id="formMessage" class="text-green-400 mt-2 hidden">Message sent successfully!</p>
+    </form>
+  </div>
+</div>
+
  
     
 <!-- SERVICES HERO -->
@@ -150,88 +231,113 @@
 
 
 
-<!-- SERVICES GRID (Neo Dark + Icon Version) -->
+<!-- SERVICES GRID (15 Services – Neo Dark + Glow) -->
 <section class="py-20 bg-[#050712]">
   <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
     <!-- 01 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">01.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">🤖 Automated GST Fetching & Reconciliation</h3>
-      <p class="text-white/70 text-sm">Auto-pull GST data & reconcile mismatches instantly.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Vertofi Financial Health Score™</h3>
+      <p class="text-white/70 text-sm">Analyzes expenses, taxes, cashflow, GST accuracy, payroll, debt risk & profit leakage.</p>
     </div>
 
     <!-- 02 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">02.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">📄 OCR-Based Document Capture</h3>
-      <p class="text-white/70 text-sm">Extract data from invoices & receipts with AI-powered OCR.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Predictive Tax Warning System™</h3>
+      <p class="text-white/70 text-sm">AI forecasts upcoming tax/GST problems & alerts before penalties hit.</p>
     </div>
 
     <!-- 03 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">03.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">🧠 AI-Based Categorization of Expenses</h3>
-      <p class="text-white/70 text-sm">Automatically classify expenses with intelligent algorithms.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Vertofi Business Lifeguard™ (24×7)</h3>
+      <p class="text-white/70 text-sm">Emergency help for GST/IT notices, fraud, disputes, TDS issues & crises.</p>
     </div>
 
     <!-- 04 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">04.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">🏦 Automated Bank Syncing & Reconciliation</h3>
-      <p class="text-white/70 text-sm">Sync bank feeds & reconcile entries in real-time.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">ProfitLeak Finder™</h3>
+      <p class="text-white/70 text-sm">Detects overspending, duplicates, hidden charges, useless subscriptions & missed credits.</p>
     </div>
 
     <!-- 05 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">05.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">📊 Predictive Analytics for Tax & Cashflow</h3>
-      <p class="text-white/70 text-sm">Forecast taxes, cashflow, and financial risks using AI.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Virtual Business Director™ (VBD)</h3>
+      <p class="text-white/70 text-sm">AI-backed decision engine with financial outcome simulations for major business choices.</p>
     </div>
 
     <!-- 06 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">06.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">🛡️ Fraud Detection via Anomaly Analysis</h3>
-      <p class="text-white/70 text-sm">Detect unusual transactions instantly with machine learning.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">WhatsApp Micro Accounting™</h3>
+      <p class="text-white/70 text-sm">Clients send images/voice notes on WhatsApp — Vertofi automates everything.</p>
     </div>
 
     <!-- 07 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">07.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">🚨 24×7 Emergency Financial Desk</h3>
-      <p class="text-white/70 text-sm">Round-the-clock support for urgent financial issues.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Financial Wellness Program™</h3>
+      <p class="text-white/70 text-sm">Coaching for tax discipline, spending habits, cashflow planning & financial health.</p>
     </div>
 
     <!-- 08 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">08.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">📈 Data Visualization Dashboards</h3>
-      <p class="text-white/70 text-sm">Interactive dashboards for real-time business insights.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Invisible Accounting™</h3>
+      <p class="text-white/70 text-sm">Autopilot syncing of bank, GST, TDS, payroll, POS, CRMs & WhatsApp invoices.</p>
     </div>
 
     <!-- 09 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">09.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">📲 WhatsApp-Based Workflow Automation</h3>
-      <p class="text-white/70 text-sm">Approve tasks, submit documents & get updates via WhatsApp.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">VendorTrust Score™</h3>
+      <p class="text-white/70 text-sm">Vendor risk scoring using GST history, disputes, defaults & payment behavior.</p>
     </div>
 
     <!-- 10 -->
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-                hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
       <p class="text-yellow-400 text-sm mb-2">10.</p>
-      <h3 class="text-xl font-semibold text-white mb-2">🕵️ Blackbox Logging for Transparency</h3>
-      <p class="text-white/70 text-sm">Every action is logged for full transparency & audit tracking.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Accounting Warranty+™</h3>
+      <p class="text-white/70 text-sm">If Vertofi makes an accounting/tax error that causes a penalty — Vertofi pays.</p>
+    </div>
+
+    <!-- 11 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">11.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">MoneyMap Live™</h3>
+      <p class="text-white/70 text-sm">Live cashflow map showing inflows, leaks, profit zones & seasonality.</p>
+    </div>
+
+    <!-- 12 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">12.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">On-Demand Accountant (10-Min Help)™</h3>
+      <p class="text-white/70 text-sm">Instant, pay-per-use accountant assistance for urgent queries.</p>
+    </div>
+
+    <!-- 13 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">13.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Financial Black Box Recording™</h3>
+      <p class="text-white/70 text-sm">Records every financial change & generates audit-grade reconstructions.</p>
+    </div>
+
+    <!-- 14 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">14.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Vertofi Industry Benchmarks™</h3>
+      <p class="text-white/70 text-sm">Compares your business anonymously with industry expense & profit trends.</p>
+    </div>
+
+    <!-- 15 -->
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_40px_rgba(0,194,255,0.25)] hover:-translate-y-2 transition">
+      <p class="text-yellow-400 text-sm mb-2">15.</p>
+      <h3 class="text-xl font-semibold text-white mb-2">Zero-Data-Entry Accounting™</h3>
+      <p class="text-white/70 text-sm">Complete automation that removes all manual data entry forever.</p>
     </div>
 
   </div>
@@ -381,6 +487,92 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
 });
 </script>
+
+
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<!-- AOS Auto Apply + Init -->
+<script>
+  window.onload = function () {
+
+    // Add fade-up to all section divs
+    document.querySelectorAll("section div").forEach(el => {
+      if (!el.hasAttribute("data-aos")) {
+        el.setAttribute("data-aos", "fade-up");
+        el.setAttribute("data-aos-duration", "900");
+      }
+    });
+
+    AOS.init({
+      duration: 1000,
+      once: false,
+      easing: "ease-out-cubic",
+    });
+
+    AOS.refresh();
+  };
+</script>
+
+<script>
+  // Modal Open/Close
+  const modal = document.getElementById('waitlistModal');
+  const waitBtn = document.getElementById('waitBtn');
+  const modalClose = document.getElementById('modalClose');
+
+  // Open modal
+  waitBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex'); // ensure flex for centering
+  });
+
+  // Close modal
+  modalClose.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  });
+
+  // Close modal on clicking outside content
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  });
+
+  // Feature Dropdown Background change
+  const featureSelect = document.getElementById('featureSelect');
+  featureSelect.addEventListener('focus', () => featureSelect.classList.add('bg-white/10'));
+  featureSelect.addEventListener('blur', () => featureSelect.classList.remove('bg-white/10'));
+
+  // Web3Forms AJAX submission
+  const form = document.getElementById("waitlistForm");
+  const formMessage = document.getElementById("formMessage");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        formMessage.classList.remove("hidden");
+        form.reset();
+      } else {
+        alert("Something went wrong. Please try again!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error sending form. Please try again.");
+    }
+  });
+</script>
+
 
 </body>
 </html>
