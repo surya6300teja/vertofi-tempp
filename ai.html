@@ -70,6 +70,16 @@
   /* Remove default arrow on some browsers */
   select::-ms-expand { display: none; }
 
+  /* Hide scrollbar but allow scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+
 </style>
 
 </head>
@@ -91,14 +101,14 @@
       <a href="./about.html" class="nav-link text-white hover:text-cyan-300 transition">About</a>
       <a href="./services.html" class="nav-link text-white hover:text-cyan-300 transition">Features</a>
       <a href="./blog.html" class="nav-link text-white hover:text-cyan-300 transition">Blog</a>
-      <a href="./ai.html" class="nav-link text-white hover:text-cyan-300 transition">AI</a>
+      <a href="./ai.html" class="nav-link text-white hover:text-cyan-300 transition">Pricing</a>
       <a href="./contact.html" class="nav-link text-white hover:text-cyan-300 transition">Contact</a>
     </nav>
 
     <!-- Mobile & Join Waitlist -->
     <div class="flex items-center space-x-3">
       <!-- Join Waitlist Button (visible on all screens) -->
-      <a href="javascript:void(0);" id="waitBtn">
+      <!-- <a href="javascript:void(0);" id="waitBtn">
         <button
           class="px-4 py-2 rounded-full text-black font-semibold
                  bg-gradient-to-r from-cyan-300 to-blue-500
@@ -106,7 +116,7 @@
                  ring-1 ring-cyan-400/20 hover:scale-[1.02] transition-transform text-sm md:text-base">
           Join Waitlist
         </button>
-      </a>
+      </a> -->
 
       <!-- Mobile Toggle -->
       <button id="menuBtn" class="md:hidden text-2xl text-white p-2 rounded-md hover:bg-white/5 transition">
@@ -125,7 +135,7 @@
     <a class="block text-lg hover:text-cyan-300 transition" href="./about.html">About</a>
     <a class="block text-lg hover:text-cyan-300 transition" href="./services.html">Features</a>
     <a class="block text-lg hover:text-cyan-300 transition" href="./blog.html">Blog</a>
-    <a class="block text-lg hover:text-cyan-300 transition" href="./ai.html">AI</a>
+    <a class="block text-lg hover:text-cyan-300 transition" href="./ai.html">Pricing</a>
     <a class="block text-lg hover:text-cyan-300 transition" href="./contact.html">Contact</a>
   </div>
 </header>
@@ -145,21 +155,41 @@
 
       <h2 class="text-2xl font-semibold mb-4 text-white">Join Waitlist</h2>
 
+      <!-- Name -->
       <input type="text" name="name" placeholder="Your Name" required
              class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none">
 
+      <!-- Phone -->
       <input type="tel" name="phone" placeholder="Phone Number" required
              class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none">
 
+      <!-- Email -->
       <input type="email" name="email" placeholder="Email Address" required
              class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none">
+
+      <!-- Pricing Plan Dropdown -->
+      <div class="relative w-full">
+        <select name="pricing_plan" required
+                class="w-full p-4 rounded-xl bg-white/5 border border-white/20 text-white focus:ring-1 focus:ring-cyan-400 outline-none appearance-none cursor-pointer">
+          <option value="" disabled selected>Select Pricing Plan</option>
+          <option value="Starter Plan - ₹2,999">Starter — ₹2,999 / month</option>
+          <option value="Growth Plan - ₹5,999">Growth — ₹5,999 / month</option>
+          <option value="Power Plan - ₹12,999">Power — ₹12,999 / month</option>
+          <option value="Custom / Enterprise">Custom / Enterprise</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
 
       <!-- Feature Dropdown -->
       <div class="relative w-full">
         <select name="feature" required
-                class="w-full p-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none appearance-none cursor-pointer"
+                class="w-full p-4 rounded-xl bg-white/5 border border-white/20 text-white focus:ring-1 focus:ring-cyan-400 outline-none appearance-none cursor-pointer"
                 id="featureSelect">
-          <option value="" disabled selected>Select Feature</option>
+          <option value="" disabled selected>Select Feature of Interest</option>
           <option value="Vertofi Financial Health Score™">Vertofi Financial Health Score™</option>
           <option value="Predictive Tax Warning System™">Predictive Tax Warning System™</option>
           <option value="Vertofi Business Lifeguard™ (24×7)">Vertofi Business Lifeguard™ (24×7)</option>
@@ -183,13 +213,15 @@
         </div>
       </div>
 
-      <textarea name="message" rows="4" placeholder="Your Message" 
+      <!-- Message -->
+      <textarea name="message" rows="4" placeholder="Tell us about your business or expectations..."
                 class="w-full p-4 rounded-xl bg-white/5 border border-white/20 placeholder-white/50 focus:ring-1 focus:ring-cyan-400 outline-none"></textarea>
 
+      <!-- Submit -->
       <button type="submit"
               class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-300 to-blue-500 text-black font-semibold
                      shadow-lg hover:scale-[1.02] transition-transform">
-        Send Message
+        Join Waitlist
       </button>
 
       <p id="formMessage" class="text-green-400 mt-2 hidden">Message sent successfully!</p>
@@ -198,41 +230,721 @@
 </div>
 
 
+<!-- Custom Quote Modal -->
+<div id="customModal"
+     class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
 
-<section class="min-h-screen flex items-center justify-center bg-[#050712] px-6 relative overflow-hidden">
+  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl
+              w-full max-w-xl p-8 relative text-white">
 
-  <!-- Neon Glow Background Overlay -->
-  <div class="absolute inset-0 bg-gradient-to-r from-[#00C2FF]/20 via-[#8B5CF6]/20 to-[#00C2FF]/20 blur-3xl pointer-events-none"></div>
+    <!-- Close -->
+    <button id="customModalClose"
+      class="absolute top-4 right-4 text-white text-2xl hover:text-purple-400">
+      &times;
+    </button>
 
-  <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] text-center max-w-xl w-full">
+    <h2 class="text-2xl font-semibold mb-4">Request a Custom Quote</h2>
+    <p class="text-white/70 mb-6 text-sm">
+      Tell us a bit about your business. Our team will get back with a tailored plan.
+    </p>
 
-    <!-- Animated Coins -->
-    <div class="relative w-20 h-20 mx-auto mb-6">
-      <div class="absolute inset-0 bg-[#00C2FF]/20 rounded-full animate-bounce-slow"></div>
-      <div class="absolute inset-2 bg-[#00C2FF]/40 rounded-full animate-bounce-delay"></div>
-      <div class="absolute inset-4 bg-[#00C2FF] rounded-full animate-bounce"></div>
+    <form id="customQuoteForm" class="space-y-4">
+
+      <!-- Web3Forms -->
+      <input type="hidden" name="access_key" value="ed38b464-269e-4461-911d-80ff24535f21">
+      <input type="hidden" name="subject" value="Custom Plan Quote Request">
+      <input type="hidden" name="pricing_plan" value="Custom / Enterprise">
+
+      <input type="text" name="name" required placeholder="Your Name"
+        class="w-full p-3 rounded-xl bg-white/10 border border-white/20 placeholder-white/50
+               focus:ring-1 focus:ring-purple-400 outline-none">
+
+      <input type="tel" name="phone" required placeholder="Phone Number"
+        class="w-full p-3 rounded-xl bg-white/10 border border-white/20 placeholder-white/50
+               focus:ring-1 focus:ring-purple-400 outline-none">
+
+      <input type="email" name="email" required placeholder="Email Address"
+        class="w-full p-3 rounded-xl bg-white/10 border border-white/20 placeholder-white/50
+               focus:ring-1 focus:ring-purple-400 outline-none">
+
+      <select name="business_type" required
+        class="w-full p-3 rounded-xl bg-white/10 border border-white/20 text-white
+               focus:ring-1 focus:ring-purple-400 outline-none appearance-none">
+        <option value="" disabled selected>Select Business Type</option>
+        <option value="MSME / Small Business">MSME / Small Business</option>
+        <option value="Startup">Startup</option>
+        <option value="Service Agency">Service Agency</option>
+        <option value="Manufacturer">Manufacturer</option>
+        <option value="Distributor / Trader">Distributor / Trader</option>
+        <option value="Enterprise">Enterprise</option>
+      </select>
+
+      <button type="submit"
+        class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-500 to-cyan-500
+               text-black font-semibold hover:scale-[1.02] transition">
+        Submit Request
+      </button>
+
+      <p id="customSuccess" class="text-green-400 text-sm hidden">
+        ✔ Request submitted successfully! Our team will contact you.
+      </p>
+    </form>
+  </div>
+</div>
+
+
+<!-- STARTER PLAN DETAILS MODAL -->
+<div id="starterModal"
+     class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
+
+  <div class="bg-[#050712] border border-white/10 rounded-2xl
+              w-full max-w-4xl p-8 relative text-white
+              overflow-y-auto max-h-[90vh] no-scrollbar">
+
+    <!-- Close -->
+    <button id="starterModalClose"
+      class="absolute top-4 right-4 text-white text-2xl hover:text-sky-400">
+      &times;
+    </button>
+
+    <!-- Header -->
+    <div class="mb-6">
+      <span class="text-sky-400 text-sm uppercase tracking-widest">Starter Plan</span>
+      <h2 class="text-3xl font-semibold mt-2">₹2,999 / month</h2>
+      <p class="text-white/70 mt-2">
+        Simple, WhatsApp-first accounting with financial health visibility.
+      </p>
     </div>
 
-    <h2 class="text-3xl font-semibold text-white mb-4">
-      Our AI Is Still Doing the Math...
-    </h2>
+    <!-- Built For -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Built for</h3>
+      <p class="text-white/70 text-sm">
+        New MSMEs, freelancers, shop owners, home businesses
+      </p>
+    </div>
 
-    <p class="text-white/70 text-lg leading-relaxed">
-      We're building something smart enough to handle your finances.
-      <br />
-      Hopefully smarter than that one friend who invests based on Instagram reels.
-    </p>
+    <!-- Innovations -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-3">Included Proprietary Innovations</h3>
 
-    <p class="text-white/50 mt-6 italic">
-      Until then, sit back and imagine impressive AI things happening here.
-    </p>
+      <div class="space-y-4 text-white/80 text-sm">
+        <p><strong>✅ WhatsApp Micro Accounting™</strong><br>
+          Send invoices, images, or voice notes → auto accounting.</p>
 
-    <p class="text-yellow-400 font-semibold mt-4">
-      Coming Soon — because good things take time (and accountants).
-    </p>
+        <p><strong>✅ Zero-Data-Entry Accounting™ (Basic)</strong><br>
+          Bank sync + WhatsApp data automation.</p>
+
+        <p><strong>✅ Vertofi Financial Health Score™ (Lite)</strong></p>
+        <ul class="ml-5 list-disc text-white/70">
+          <li>Expense discipline</li>
+          <li>GST filing behavior</li>
+          <li>Cashflow balance</li>
+          <li>Debt exposure</li>
+          <li>Basic accuracy checks</li>
+        </ul>
+
+        <p><strong>✅ MoneyMap Live™ (Basic)</strong><br>
+          Simple inflow/outflow reports + monthly trends.</p>
+
+        <p><strong>✅ Financial Wellness Program (Lite)</strong><br>
+          Training for tax discipline & cashflow habits.</p>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Additional Starter Services</h3>
+      <ul class="list-disc ml-5 text-white/70 text-sm space-y-1">
+        <li>Monthly automated P&L + cashflow</li>
+        <li>GST filing reminders</li>
+        <li>Basic expense audit</li>
+        <li>Monthly improvement suggestions</li>
+      </ul>
+    </div>
+
+    <!-- Not Included -->
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold mb-2 text-red-400">Not included</h3>
+      <p class="text-white/60 text-sm">
+        Predictive AI, VBD, Financial Black Box, VendorTrust Score,
+        Business Lifeguard 24×7.
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <!-- <button
+      class="w-full py-3 rounded-xl bg-sky-500 text-black font-semibold hover:bg-sky-400 transition openWaitlistBtn"
+      data-plan="Starter Plan - ₹2,999">
+      Start with Starter
+    </button> -->
+  </div>
+</div>
+
+
+<!-- GROWTH PLAN DETAILS MODAL -->
+<div id="growthModal"
+     class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
+
+  <div class="bg-[#050712] border border-white/10 rounded-2xl
+              w-full max-w-4xl p-8 relative text-white
+              overflow-y-auto max-h-[90vh] no-scrollbar">
+
+    <!-- Close -->
+    <button id="growthModalClose"
+      class="absolute top-4 right-4 text-white text-2xl hover:text-orange-400">
+      &times;
+    </button>
+
+    <!-- Header -->
+    <div class="mb-6">
+      <span class="text-orange-400 text-sm uppercase tracking-widest">Growth Plan</span>
+      <h2 class="text-3xl font-semibold mt-2">₹5,999 / month</h2>
+      <p class="text-white/70 mt-2">
+        Automation, leak prevention & business health intelligence.
+      </p>
+    </div>
+
+    <!-- Built For -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Built for</h3>
+      <p class="text-white/70 text-sm">
+        Growing MSMEs, service agencies, traders, fabricators & distributors
+      </p>
+    </div>
+
+    <!-- Goal -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Core Goal</h3>
+      <p class="text-white/70 text-sm">
+        Automation + Leak Prevention + Business Health Intelligence
+      </p>
+    </div>
+
+    <!-- Features -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-3">All Starter Features + Upgrades</h3>
+
+      <div class="space-y-4 text-white/80 text-sm">
+        <p><strong>🟧 ProfitLeak Finder™</strong><br>
+          Detects overspending, duplicate charges, wrong pricing & unused subscriptions.</p>
+
+        <p><strong>🟧 Predictive Tax Warning System™</strong><br>
+          AI alerts before GST / IT issues occur.</p>
+
+        <p><strong>🟧 Vertofi Financial Health Score™ (Full)</strong></p>
+        <ul class="ml-5 list-disc text-white/70">
+          <li>Expense discipline</li>
+          <li>Tax compliance</li>
+          <li>GST accuracy</li>
+          <li>Cashflow strength</li>
+          <li>Payroll consistency</li>
+          <li>Debt-risk level</li>
+          <li>Profit leakage impact</li>
+        </ul>
+
+        <p><strong>🟧 Invisible Accounting™</strong><br>
+          Bank → GST → TDS → POS → Payroll → WhatsApp → Billing apps</p>
+
+        <p><strong>🟧 VendorTrust Score™</strong><br>
+          GST history, filing delays, disputes, defaults & fraud patterns.</p>
+
+        <p><strong>🟧 Vertofi Industry Benchmarks™</strong><br>
+          Compare margins, GST behavior & payroll size vs competitors.</p>
+
+        <p><strong>🟧 Financial Black Box Recording™</strong><br>
+          Audit-grade tracking of every financial change.</p>
+
+        <p><strong>🟧 MoneyMap Live™ (Advanced)</strong><br>
+          Profit zones, waste zones, seasonality & ratio analysis.</p>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Additional Growth Services</h3>
+      <ul class="list-disc ml-5 text-white/70 text-sm space-y-1">
+        <li>Monthly accountant support (up to 4 sessions)</li>
+        <li>Quarterly business health review</li>
+        <li>GST + TDS + payroll automation</li>
+        <li>Smart budgeting insights</li>
+      </ul>
+    </div>
+
+    <!-- Not Included -->
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold mb-2 text-red-400">Not included</h3>
+      <p class="text-white/60 text-sm">
+        VBD AI, Lifeguard 24×7, Accounting Warranty+, corporate-grade features.
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <!-- <button
+      class="w-full py-3 rounded-xl bg-orange-500 text-black font-semibold hover:bg-orange-400 transition openWaitlistBtn"
+      data-plan="Growth Plan - ₹5,999">
+      Upgrade to Growth
+    </button> -->
+  </div>
+</div>
+
+
+<!-- POWER PLAN DETAILS MODAL -->
+<div id="powerModal"
+     class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
+
+  <div class="bg-[#050712] border border-red-500/30 rounded-2xl
+              w-full max-w-4xl p-8 relative text-white
+              overflow-y-auto max-h-[90vh] no-scrollbar">
+
+    <!-- Close -->
+    <button id="powerModalClose"
+      class="absolute top-4 right-4 text-white text-2xl hover:text-red-400">
+      &times;
+    </button>
+
+    <!-- Header -->
+    <div class="mb-6">
+      <span class="text-red-400 text-sm uppercase tracking-widest">Power Plan</span>
+      <h2 class="text-3xl font-semibold mt-2">₹12,999 / month</h2>
+      <p class="text-white/70 mt-2">
+        Predictive finance, AI decision brain & emergency-grade protection.
+      </p>
+    </div>
+
+    <!-- Built For -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Built for</h3>
+      <p class="text-white/70 text-sm">
+        High-growth MSMEs, founders, manufacturers, agencies & contractors
+      </p>
+    </div>
+
+    <!-- Goal -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-2">Core Goal</h3>
+      <p class="text-white/70 text-sm">
+        Predictive Finance + AI Decision Brain + Warranty Protection + Emergency Desk
+      </p>
+    </div>
+
+    <!-- Premium Innovations -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-3">
+        All Growth Features + Premium Innovations
+      </h3>
+
+      <div class="space-y-4 text-white/80 text-sm">
+
+        <p><strong>🔴 Virtual Business Director™ (VBD AI)</strong></p>
+        <ul class="ml-5 list-disc text-white/70">
+          <li>Hire or not?</li>
+          <li>Increase salary?</li>
+          <li>Switch vendors?</li>
+          <li>Loan or no loan?</li>
+          <li>Pricing strategy?</li>
+          <li>Investment planning</li>
+          <li>Outcome simulation (profit impact)</li>
+        </ul>
+
+        <p><strong>🔴 Vertofi Business Lifeguard™ (24×7)</strong></p>
+        <ul class="ml-5 list-disc text-white/70">
+          <li>GST & IT notices</li>
+          <li>TDS mismatches</li>
+          <li>Vendor disputes</li>
+          <li>Fraud suspicion</li>
+          <li>Sudden cashflow crises</li>
+          <li>Humans + AI + CA team available 24×7</li>
+        </ul>
+
+        <p><strong>🔴 Accounting Warranty+™</strong><br>
+          “If Vertofi causes a penalty, Vertofi pays.”</p>
+
+        <p><strong>🔴 Predictive Cashflow Engine™</strong><br>
+          Forecasts shortages, peak expenses & burnout weeks.</p>
+
+        <p><strong>🔴 On-Demand Accountant (10-Min Help)™</strong><br>
+          Unlimited mini-sessions, anytime.</p>
+
+        <p><strong>🔴 Profit Maximizer Framework™</strong></p>
+        <ul class="ml-5 list-disc text-white/70">
+          <li>Margin improvement</li>
+          <li>Team cost optimization</li>
+          <li>Pricing strategy</li>
+          <li>Product costing corrections</li>
+        </ul>
+
+        <p><strong>🔴 Industry Benchmark Pro™</strong><br>
+          Ratio deviations, seasonality patterns & leakage zones.</p>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold mb-2">Additional Power Services</h3>
+      <ul class="list-disc ml-5 text-white/70 text-sm space-y-1">
+        <li>Priority onboarding</li>
+        <li>Dedicated account manager</li>
+        <li>Full CFO-grade monthly review</li>
+        <li>Forecasting dashboards</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <!-- <button
+      class="w-full py-3 rounded-xl bg-red-500 text-black font-semibold hover:bg-red-400 transition openWaitlistBtn"
+      data-plan="Power Plan - ₹12,999">
+      Activate Power Plan
+    </button> -->
+  </div>
+</div>
+
+
+
+
+<!-- PRICING SECTION -->
+<section class="bg-[#050712] py-24 px-6">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Heading -->
+    <div class="text-center mb-16">
+      <p class="text-yellow-400 uppercase tracking-widest text-sm mb-3">Pricing</p>
+      <h2 class="text-4xl md:text-5xl font-semibold text-white">
+        Vertofi Subscription Plans
+      </h2>
+      <p class="text-white/70 mt-4 max-w-2xl mx-auto">
+        Transparent pricing designed for MSMEs — from first invoice to AI-driven finance decisions.
+      </p>
+    </div>
+
+    <!-- Pricing Cards -->
+    <div class="grid lg:grid-cols-4 gap-8">
+
+      <!-- STARTER -->
+      <div class="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-8
+                  shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                  hover:shadow-[0_10px_40px_rgba(56,189,248,0.35)]
+                  transition">
+        <span class="text-sky-400 text-sm uppercase tracking-wide">Starter</span>
+        <h3 class="text-3xl font-semibold text-white mt-2">₹2,999</h3>
+        <p class="text-white/60 mb-6">per month</p>
+
+        <p class="text-white/70 mb-4 text-sm">
+          Best for freelancers, shop owners & early MSMEs.
+        </p>
+
+        <ul class="space-y-3 text-white/80 text-sm">
+          <li>✅ WhatsApp Micro Accounting™</li>
+          <li>✅ Zero-Entry Accounting (Basic)</li>
+          <li>✅ Financial Health Score (Lite)</li>
+          <li>✅ MoneyMap Live™ (Basic)</li>
+          <li>✅ Financial Wellness Program (Lite)</li>
+          <li class="text-white/40">❌ Predictive AI & Lifeguard</li>
+        </ul>
+
+        <button
+  class="text-sky-400 text-sm underline underline-offset-4 hover:text-sky-300 transition openStarterDetails">
+  Learn more about Starter →
+</button>
+
+<button 
+  class="mt-8 w-full py-3 rounded-xl bg-sky-500 text-black font-medium hover:bg-sky-400 transition openWaitlistBtn"
+  data-plan="Starter Plan - ₹2,999">
+  Get Started
+</button>
+
+
+      </div>
+
+      <!-- GROWTH -->
+      <div class="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-8
+                  shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                  hover:shadow-[0_10px_40px_rgba(251,146,60,0.35)]
+                  transition">
+        <span class="text-orange-400 text-sm uppercase tracking-wide">Growth</span>
+        <h3 class="text-3xl font-semibold text-white mt-2">₹5,999</h3>
+        <p class="text-white/60 mb-6">per month</p>
+
+        <p class="text-white/70 mb-4 text-sm">
+          Built for growing businesses that need automation & leak prevention.
+        </p>
+
+        <ul class="space-y-3 text-white/80 text-sm">
+          <li>✅ Everything in Starter</li>
+          <li>✅ ProfitLeak Finder™</li>
+          <li>✅ Predictive Tax Warnings</li>
+          <li>✅ Invisible Accounting™</li>
+          <li>✅ VendorTrust Score™</li>
+          <li>✅ Financial Black Box™</li>
+        </ul>
+
+        <button
+  class="text-orange-400 text-sm underline underline-offset-4 hover:text-orange-300 transition openGrowthDetails">
+  Learn more about Growth →
+</button>
+
+<button 
+  class="mt-8 w-full py-3 rounded-xl bg-orange-500 text-black font-medium hover:bg-orange-400 transition openWaitlistBtn"
+  data-plan="Growth Plan - ₹5,999">
+  Scale Faster
+</button>
+
+      </div>
+
+      <!-- POWER -->
+      <div class="relative bg-white/5 border border-red-500/40 backdrop-blur-xl rounded-2xl p-8
+                  shadow-[0_10px_40px_rgba(239,68,68,0.35)]
+                  hover:shadow-[0_12px_50px_rgba(239,68,68,0.5)]
+                  transition">
+
+        <span class="absolute -top-3 right-6 bg-red-500 text-black text-xs px-3 py-1 rounded-full">
+          MOST POWERFUL
+        </span>
+
+        <span class="text-red-400 text-sm uppercase tracking-wide">Power</span>
+        <h3 class="text-3xl font-semibold text-white mt-2">₹12,999</h3>
+        <p class="text-white/60 mb-6">per month</p>
+
+        <p class="text-white/70 mb-4 text-sm">
+          CFO-grade AI finance with emergency protection.
+        </p>
+
+        <ul class="space-y-3 text-white/80 text-sm">
+          <li>✅ Virtual Business Director™ (VBD AI)</li>
+          <li>✅ Business Lifeguard 24×7</li>
+          <li>✅ Accounting Warranty+™</li>
+          <li>✅ Predictive Cashflow Engine</li>
+          <li>✅ Unlimited On-Demand Accountant</li>
+          <li>✅ Profit Maximizer Framework</li>
+        </ul>
+
+        <button
+  class="text-red-400 text-sm underline underline-offset-4 hover:text-red-300 transition openPowerDetails">
+  Learn more about Power →
+</button>
+
+
+<button 
+  class="mt-8 w-full py-3 rounded-xl bg-red-500 text-black font-medium hover:bg-red-400 transition openWaitlistBtn"
+  data-plan="Power Plan - ₹12,999">
+  Go Power Mode
+</button>
+
+      </div>
+
+<!-- CUSTOM / EXCLUSIVE -->
+<div class="relative bg-gradient-to-br from-purple-600/20 to-cyan-500/20
+            border border-white/20 backdrop-blur-xl rounded-2xl p-8
+            shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+            hover:shadow-[0_12px_50px_rgba(168,85,247,0.35)]
+            transition">
+
+  <!-- Badge -->
+  <span class="inline-block mb-3 text-purple-300 text-xs uppercase tracking-widest">
+    Exclusive
+  </span>
+
+  <!-- Title -->
+  <h3 class="text-2xl font-semibold text-white mb-3">
+    Custom Plan
+  </h3>
+
+  <!-- Description -->
+  <p class="text-white/70 mb-6 text-sm leading-relaxed">
+    Built for enterprises, complex operations & high-growth businesses.
+    Get a tailored pricing model aligned to your scale, compliance needs
+    and financial complexity.
+  </p>
+
+  <!-- Features -->
+  <ul class="space-y-3 text-white/80 text-sm mb-8">
+    <li class="flex items-start gap-2">
+      <span>✅</span>
+      <span>Custom feature combinations</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <span>✅</span>
+      <span>Dedicated finance & compliance setup</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <span>✅</span>
+      <span>SLA-backed onboarding & support</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <span>✅</span>
+      <span>Pricing aligned to business scale</span>
+    </li>
+  </ul>
+
+  <!-- CTA -->
+  <button
+    class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-500 to-cyan-500
+           text-black font-semibold shadow-lg
+           hover:shadow-[0_10px_40px_rgba(168,85,247,0.4)]
+           hover:scale-[1.03] transition-transform openCustomModal">
+    Request Custom Quote
+  </button>
+</div>
+
+
+    </div>
+  </div>
+</section>
+
+
+<!-- SUBSCRIPTION SUMMARY TABLE -->
+<section class="bg-[#050712] py-24 px-6">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Heading -->
+    <div class="text-center mb-14">
+      <p class="text-yellow-400 uppercase tracking-widest text-sm mb-3">
+        Comparison
+      </p>
+      <h2 class="text-4xl md:text-5xl font-semibold text-white">
+        Clear Subscription Mapping
+      </h2>
+      <p class="text-white/70 mt-4 max-w-3xl mx-auto">
+        Compare features across plans and choose what fits your business stage best.
+      </p>
+    </div>
+
+    <!-- Table Wrapper -->
+    <div class="overflow-x-auto">
+      <div class="min-w-[900px] bg-white/5 backdrop-blur-xl border border-white/10
+                  rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+
+        <!-- Table -->
+        <table class="w-full text-left text-white border-collapse">
+
+          <!-- Head -->
+          <thead>
+            <tr class="border-b border-white/10 text-sm uppercase tracking-wide">
+              <th class="p-5 text-white/80">Feature / Innovation</th>
+              <th class="p-5 text-sky-400">Starter</th>
+              <th class="p-5 text-orange-400">Growth</th>
+              <th class="p-5 text-red-400">Power</th>
+            </tr>
+          </thead>
+
+          <!-- Body -->
+          <tbody class="text-sm">
+
+            <!-- Row -->
+            <tr class="border-b border-white/5">
+              <td class="p-5">WhatsApp Accounting</td>
+              <td class="p-5">✅</td>
+              <td class="p-5">✅</td>
+              <td class="p-5">✅</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">Zero-Entry Accounting</td>
+              <td class="p-5 text-white/70">Basic</td>
+              <td class="p-5">Full</td>
+              <td class="p-5">Full</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">Financial Health Score</td>
+              <td class="p-5 text-white/70">Lite</td>
+              <td class="p-5">Full</td>
+              <td class="p-5">Full</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">Predictive Tax Warning</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5">✅</td>
+              <td class="p-5">✅</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">ProfitLeak Finder</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5">✅</td>
+              <td class="p-5">✅ <span class="text-xs text-red-400">(Advanced)</span></td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">Business Lifeguard 24×7</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5">✅</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">Virtual Business Director (VBD AI)</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5">✅</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">Invisible Accounting</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5">✅</td>
+              <td class="p-5">✅</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">VendorTrust Score</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5">✅</td>
+              <td class="p-5">Advanced</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">Accounting Warranty+</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5">✅</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">Financial Black Box</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5">✅</td>
+              <td class="p-5">Advanced</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">MoneyMap Live</td>
+              <td class="p-5 text-white/70">Basic</td>
+              <td class="p-5">Advanced</td>
+              <td class="p-5">Pro</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">Industry Benchmarks</td>
+              <td class="p-5 text-white/40">❌</td>
+              <td class="p-5 text-white/70">Basic</td>
+              <td class="p-5">Pro</td>
+            </tr>
+
+            <tr class="border-b border-white/5">
+              <td class="p-5">On-Demand Accountant</td>
+              <td class="p-5 text-white/70">Paid</td>
+              <td class="p-5 text-white/70">Limited</td>
+              <td class="p-5">Unlimited</td>
+            </tr>
+
+            <tr>
+              <td class="p-5">Financial Wellness Program</td>
+              <td class="p-5 text-white/70">Basic</td>
+              <td class="p-5">Advanced</td>
+              <td class="p-5">Pro</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
 
   </div>
 </section>
+
+
 
 <!-- FOOTER -->
 <footer class="bg-[#050712] py-6 text-center text-white/50 text-sm border-t border-white/10">
@@ -262,6 +974,246 @@
     onScroll();
   })();
 </script>
+
+
+
+<script>
+  const modal = document.getElementById("waitlistModal");
+  const closeBtn = document.getElementById("modalClose");
+  const pricingSelect = document.querySelector('select[name="pricing_plan"]');
+
+  if (modal && closeBtn) {
+    document.querySelectorAll(".openWaitlistBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+
+        const selectedPlan = btn.getAttribute("data-plan");
+        if (selectedPlan && pricingSelect) {
+          pricingSelect.value = selectedPlan;
+        }
+      });
+    });
+
+    closeBtn.addEventListener("click", () => {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+      }
+    });
+  }
+</script>
+
+
+<script>
+  const customForm = document.getElementById("customQuoteForm");
+  const successMsg = document.getElementById("customSuccess");
+
+  if (customForm) {
+    customForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(customForm);
+
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          customForm.reset();
+          successMsg.classList.remove("hidden");
+        } else {
+          alert("Something went wrong. Please try again.");
+        }
+      } catch (error) {
+        alert("Network error. Please try again later.");
+      }
+    });
+  }
+</script>
+
+
+<script>
+  const waitlistForm = document.getElementById("waitlistForm");
+  const waitlistSuccess = document.getElementById("formMessage");
+
+  if (waitlistForm) {
+    waitlistForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(waitlistForm);
+
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          waitlistForm.reset();
+          waitlistSuccess.classList.remove("hidden");
+
+          // optional: auto close modal after 2.5s
+          setTimeout(() => {
+            document.getElementById("waitlistModal").classList.add("hidden");
+            document.getElementById("waitlistModal").classList.remove("flex");
+            document.body.classList.remove("overflow-hidden");
+            waitlistSuccess.classList.add("hidden");
+          }, 2500);
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+      } catch (error) {
+        alert("Network error. Please try again later.");
+      }
+    });
+  }
+</script>
+
+
+<script>
+  const customModal = document.getElementById("customModal");
+  const customCloseBtn = document.getElementById("customModalClose");
+
+  // Open custom modal buttons
+  document.querySelectorAll(".openCustomModal").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (!customModal) return;
+
+      customModal.classList.remove("hidden");
+      customModal.classList.add("flex");
+      document.body.classList.add("overflow-hidden");
+    });
+  });
+
+  // Close via X
+  if (customCloseBtn) {
+    customCloseBtn.addEventListener("click", () => {
+      customModal.classList.add("hidden");
+      customModal.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+    });
+  }
+
+  // Close on outside click
+  if (customModal) {
+    customModal.addEventListener("click", (e) => {
+      if (e.target === customModal) {
+        customModal.classList.add("hidden");
+        customModal.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+      }
+    });
+  }
+</script>
+
+<script>
+  const starterModal = document.getElementById("starterModal");
+  const starterClose = document.getElementById("starterModalClose");
+
+  document.querySelectorAll(".openStarterDetails").forEach(btn => {
+    btn.addEventListener("click", () => {
+      starterModal.classList.remove("hidden");
+      starterModal.classList.add("flex");
+      document.body.classList.add("overflow-hidden");
+    });
+  });
+
+  if (starterClose) {
+    starterClose.addEventListener("click", () => {
+      starterModal.classList.add("hidden");
+      starterModal.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+    });
+  }
+
+  if (starterModal) {
+    starterModal.addEventListener("click", (e) => {
+      if (e.target === starterModal) {
+        starterModal.classList.add("hidden");
+        starterModal.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+      }
+    });
+  }
+</script>
+
+<script>
+  const growthModal = document.getElementById("growthModal");
+  const growthClose = document.getElementById("growthModalClose");
+
+  document.querySelectorAll(".openGrowthDetails").forEach(btn => {
+    btn.addEventListener("click", () => {
+      growthModal.classList.remove("hidden");
+      growthModal.classList.add("flex");
+      document.body.classList.add("overflow-hidden");
+    });
+  });
+
+  if (growthClose) {
+    growthClose.addEventListener("click", () => {
+      growthModal.classList.add("hidden");
+      growthModal.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+    });
+  }
+
+  if (growthModal) {
+    growthModal.addEventListener("click", (e) => {
+      if (e.target === growthModal) {
+        growthModal.classList.add("hidden");
+        growthModal.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+      }
+    });
+  }
+</script>
+
+<script>
+  const powerModal = document.getElementById("powerModal");
+  const powerClose = document.getElementById("powerModalClose");
+
+  document.querySelectorAll(".openPowerDetails").forEach(btn => {
+    btn.addEventListener("click", () => {
+      powerModal.classList.remove("hidden");
+      powerModal.classList.add("flex");
+      document.body.classList.add("overflow-hidden");
+    });
+  });
+
+  if (powerClose) {
+    powerClose.addEventListener("click", () => {
+      powerModal.classList.add("hidden");
+      powerModal.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+    });
+  }
+
+  if (powerModal) {
+    powerModal.addEventListener("click", (e) => {
+      if (e.target === powerModal) {
+        powerModal.classList.add("hidden");
+        powerModal.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+      }
+    });
+  }
+</script>
+
 
 
     
